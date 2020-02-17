@@ -8,9 +8,7 @@ class ItemsController < ApplicationController
     @item = Item.new
     @brand = Brand.new
     @category1 = Category.new
-    @category1s = Category.all.order("id")
-    # @category2s = Category2.all.order("id")
-    # @category3s = Category3.all.order("id")
+    @category1s = Category.order("id").limit(13)
     @brands = Brand.all.order("id")
   end
 
@@ -18,11 +16,12 @@ class ItemsController < ApplicationController
     @brand = Brand.new(brand_params)
     if @brand.save
       @item = Item.new(item_params)
-    else
+    elsif @brand.brand_name.present?
       b_id = Brand.find_by(brand_name: @brand.brand_name).id
       @item = Item.new(item_params)
       @item["brand_id"] = b_id
-      
+    else
+      @item = Item.new(item_params)
     end
     @item.save
     redirect_to new_item_path, notice: "出品しました"
