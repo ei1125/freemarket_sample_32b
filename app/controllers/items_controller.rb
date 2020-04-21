@@ -27,7 +27,11 @@ class ItemsController < ApplicationController
     @category = Category.find(@item.category_id)
     @category_parent = @category.parent
     @category_root = @category.root
-    @brand = @item.brand
+    if @item.brand.present?
+      @brand = @item.brand
+    else
+      @brand = Brand.new
+    end
     @categories_root = @category.root.siblings
     @categories_parent = @category.parent.siblings
     @categories = @category.siblings
