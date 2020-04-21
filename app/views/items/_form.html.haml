@@ -84,7 +84,7 @@
                   %span 任意
                 .container__sell-main__sell-box__item-container__cleafix__form-box__select
                   = f.collection_select(:size_id, @sizes, :id, :size, {prompt: "選択してください"}, class: "select_form")
-            - if @item.brand_id.present?
+            - if @item.persisted?
               #brand-box
                 .container__sell-main__sell-box__item-container__cleafix__form-box__form-any
                   %p ブランド 
